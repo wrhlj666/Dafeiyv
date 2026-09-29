@@ -190,8 +190,7 @@ dotnet run
 
 ## ⚠️ 注意
 
-- **不要提交 `Settings.json` 和 `Memory.txt`**：前者含你的 API Key，后者是你的个人聊天记忆。建议加入 `.gitignore`。
-- **动画素材版权**：`Images/`、`Idle/`、`Interact/` 下的 GIF 为收集/自制素材，若二次分发请自行确认授权。**代码与素材的授权可能不同**，转发仓库时请注意。
+作者b站视频：https://www.bilibili.com/video/BV1FS4d6hE5S/?share_source=copy_web&vd_source=38203bd7eb3c4f92a1a2c5e61fc09c05
 - 本项目仅用于学习交流，与 DeepSeek 官方无隶属关系。
 
 ---
