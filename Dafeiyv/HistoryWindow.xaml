@@ -1,0 +1,84 @@
+<Window x:Class="Dafeiyv.HistoryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="💬 对话记录" 
+        Height="450" 
+        Width="550"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResize"
+        MinHeight="300"
+        MinWidth="400">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 标题 -->
+        <TextBlock Grid.Row="0" 
+                   Text="📝 最近对话记录" 
+                   FontSize="18" 
+                   FontWeight="Bold" 
+                   Margin="0,0,0,12"/>
+
+        <!-- 滚动区域（用 Border 包裹实现圆角） -->
+        <Border Grid.Row="1"
+                Background="#F5F5F5"
+                BorderBrush="#DDDDDD"
+                BorderThickness="1"
+                CornerRadius="8">
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto" 
+                          HorizontalScrollBarVisibility="Disabled"
+                          Padding="0">
+
+                <TextBlock x:Name="HistoryTextBlock" 
+                           TextWrapping="Wrap" 
+                           FontSize="14" 
+                           LineHeight="28"
+                           Padding="12,10"
+                           FontFamily="Microsoft YaHei, Segoe UI" />
+            </ScrollViewer>
+        </Border>
+
+        <!-- 底部按钮 -->
+        <StackPanel Grid.Row="2" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Right" 
+                    Margin="0,12,0,0">
+
+            <Button Content="🧹 清空记录" 
+                    Width="100" 
+                    Height="32" 
+                    Margin="0,0,10,0"
+                    Click="ClearButton_Click"
+                    Background="#FF6B6B"
+                    Foreground="White"
+                    BorderThickness="0"
+                    Cursor="Hand"/>
+
+            <Button Content="关闭" 
+                    Width="80" 
+                    Height="32" 
+                    Click="CloseButton_Click"
+                    Background="#4A4A4A"
+                    Foreground="White"
+                    BorderThickness="0"
+                    Cursor="Hand"/>
+        </StackPanel>
+
+        <!-- 底部提示 -->
+        <TextBlock Grid.Row="3"
+                   Text="💡 ctrl+左键点击宠物可以直接清除记录哦"
+                   FontSize="12"
+                   Foreground="#999999"
+                   Margin="0,10,0,0"
+                   HorizontalAlignment="Center"/>
+    </Grid>
+</Window>

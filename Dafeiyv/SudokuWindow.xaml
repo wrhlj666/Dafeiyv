@@ -1,0 +1,99 @@
+<Window x:Class="Dafeiyv.SudokuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="🧩 数独" 
+        Height="440" 
+        Width="300"
+        MinWidth="240"
+        MinHeight="330"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="CanResize"
+        PreviewKeyDown="Window_PreviewKeyDown">
+
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 顶栏：难度 + 聊天开关 -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="难度" FontSize="11" VerticalAlignment="Center"/>
+                <ComboBox x:Name="DifficultyCombo" Width="56" Height="22" FontSize="11" Margin="3,0,0,0"
+                          SelectedIndex="1" SelectionChanged="DifficultyCombo_SelectionChanged">
+                    <ComboBoxItem Content="简单"/>
+                    <ComboBoxItem Content="中等"/>
+                    <ComboBoxItem Content="困难"/>
+                </ComboBox>
+            </StackPanel>
+            <TextBlock Grid.Column="1" Text="左键输入，右键备注" FontSize="10" Foreground="#999999"
+                       VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Button Grid.Column="2" x:Name="ChatToggleButton" Content="💬" Width="26" Height="22" FontSize="11"
+                    HorizontalAlignment="Right" VerticalAlignment="Center"
+                    ToolTip="展开/收起 AI 聊天" Click="ChatToggle_Click"/>
+        </Grid>
+
+        <!-- 棋盘（方形格子，随窗口缩放） -->
+        <Border Grid.Row="1" BorderBrush="#333333" BorderThickness="3" Margin="0,6,0,6"
+                Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid x:Name="BoardHost" SizeChanged="BoardHost_SizeChanged"/>
+        </Border>
+
+        <!-- 数字键盘：左键填入，右键添加/移除备注（铅笔小数字） -->
+        <UniformGrid Grid.Row="2" x:Name="NumPad" Columns="10">
+            <Button Content="1" Height="24" Margin="1" FontSize="12" Click="NumberButton_Click" MouseRightButtonUp="NumberButton_RightClick" Tag="1"/>
+            <Button Content="2" Height="24" Margin="1" FontSize="12" Click="NumberButton_Click" MouseRightButtonUp="NumberButton_RightClick" Tag="2"/>
+            <Button Content="3" Height="24" Margin="1" FontSize="12" Click="NumberButton_Click" MouseRightButtonUp="NumberButton_RightClick" Tag="3"/>
+            <Button Content="4" Height="24" Margin="1" FontSize="12" Click="NumberButton_Click" MouseRightButtonUp="NumberButton_RightClick" Tag="4"/>
+            <Button Content="5" Height="24" Margin="1" FontSize="12" Click="NumberButton_Click" MouseRightButtonUp="NumberButton_RightClick" Tag="5"/>
+            <Button Content="6" Height="24" Margin="1" FontSize="12" Click="NumberButton_Click" MouseRightButtonUp="NumberButton_RightClick" Tag="6"/>
+            <Button Content="7" Height="24" Margin="1" FontSize="12" Click="NumberButton_Click" MouseRightButtonUp="NumberButton_RightClick" Tag="7"/>
+            <Button Content="8" Height="24" Margin="1" FontSize="12" Click="NumberButton_Click" MouseRightButtonUp="NumberButton_RightClick" Tag="8"/>
+            <Button Content="9" Height="24" Margin="1" FontSize="12" Click="NumberButton_Click" MouseRightButtonUp="NumberButton_RightClick" Tag="9"/>
+            <Button Content="⌫" Height="24" Margin="1" FontSize="12" Click="ClearButton_Click"/>
+        </UniformGrid>
+
+        <!-- 工具 -->
+        <UniformGrid Grid.Row="3" x:Name="ToolRow" Columns="3" Margin="0,3,0,0">
+            <Button Content="💡 提示" Height="24" Margin="1" FontSize="11" Click="HintButton_Click"/>
+            <Button Content="🔍 检查" Height="24" Margin="1" FontSize="11" Click="CheckButton_Click"/>
+            <Button Content="🔄 新游戏" Height="24" Margin="1" FontSize="11" Click="NewGameButton_Click"/>
+        </UniformGrid>
+
+        <!-- AI 聊天（默认收起） -->
+        <Border Grid.Row="4" x:Name="ChatArea" BorderBrush="#DDDDDD" BorderThickness="1" CornerRadius="4"
+                Background="#F7F7F7" Margin="0,5,0,0" Height="120" Visibility="Collapsed">
+            <ScrollViewer x:Name="ChatScroll" VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="ChatPanel" Margin="5"/>
+            </ScrollViewer>
+        </Border>
+
+        <!-- 输入（跟随聊天区收起） -->
+        <Grid Grid.Row="5" x:Name="InputRow" Margin="0,5,0,0" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <TextBox x:Name="ChatInput" Height="26" FontSize="11" TextWrapping="Wrap"
+                         VerticalScrollBarVisibility="Auto" PreviewKeyDown="ChatInput_KeyDown"
+                         TextChanged="ChatInput_TextChanged" GotKeyboardFocus="ChatInput_GotKeyboardFocus"
+                         LostKeyboardFocus="ChatInput_LostKeyboardFocus"/>
+                <TextBlock x:Name="ChatWatermark" Text="只记住上一条对话，不写入长期记忆" FontSize="11"
+                           Foreground="#AAAAAA" VerticalAlignment="Center" Margin="4,0,0,0"
+                           IsHitTestVisible="False" TextTrimming="CharacterEllipsis"/>
+            </Grid>
+            <Button Grid.Column="1" Content="发送" Width="40" Height="26" Margin="5,0,0,0" FontSize="11" Click="SendChat_Click"/>
+        </Grid>
+    </Grid>
+</Window>
